@@ -1,0 +1,129 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top" >
+        
+    <TextView
+        android:id="@+id/TV_USER_NAME"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="名前"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    
+    <Spinner
+        android:id="@+id/SP_USERNAME"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/TV_USER_NAME"
+        android:layout_alignParentTop="true" />
+
+
+    </LinearLayout>
+ 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    
+    <TextView
+        android:id="@+id/TV_START_DAY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="clip_vertical"
+        android:layout_marginTop="10dp"
+        android:text="集計開始日"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <DatePicker
+        android:id="@+id/DP_START_DAY"
+        android:layout_width="210dp"
+        android:layout_height="100dp"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:calendarViewShown="false" />
+
+    </LinearLayout>
+ 
+ 	<LinearLayout
+ 	    android:layout_width="match_parent"
+ 	    android:layout_height="wrap_content" >
+    
+    <TextView
+        android:id="@+id/TV_END_DAY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_vertical"
+        android:layout_marginTop="10dp"
+        android:text="集計終了日"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <DatePicker
+        android:id="@+id/DP_END_DAY"
+        android:layout_width="210dp"
+        android:layout_height="100dp"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:calendarViewShown="false" />
+    
+    </LinearLayout>
+
+ 	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom" >
+    
+    <TextView
+        android:id="@+id/TV_KOUMOKU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="絞込項目名"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/ET_KOUMOKU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/TV_KOUMOKU"
+        android:ems="10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+        
+    <Button
+        android:id="@+id/BTN_START"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="集計" />
+ 	</LinearLayout>
+ 	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom" >
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/multiAutoCompleteTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+		android:editable="false"	
+        android:layout_marginTop="0dp"
+        android:text="MultiAutoCompleteTextView" />
+
+	</LinearLayout>
+	
+</LinearLayout>
