@@ -3,6 +3,8 @@ package com.housekeepbyline.main;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.housekeepbyline.output.OutputDataCheck;
+
 public class Kakeibo {
 
 	private Calendar day = Calendar.getInstance();
@@ -27,13 +29,14 @@ public class Kakeibo {
 	}
 	
 	public void setDay(String date) {
-		int yyyy = (InputDataCheck.parseYear(date));
-		int MM   = (InputDataCheck.parseMonth(date));
-		int dd   = (InputDataCheck.parseDay(date));
-		int hh = Integer.valueOf(date.split(" ")[1].split(":")[0]);
-		int mm  = Integer.valueOf(date.split(" ")[1].split(":")[1]);
+		int yyyy = (OutputDataCheck.parseYear(date));
+		int MM   = (OutputDataCheck.parseMonth(date));
+		int dd   = (OutputDataCheck.parseDay(date));
+		int hh   = (OutputDataCheck.parseHour(date));
+		int mm   = (OutputDataCheck.parseMin(date));
+		int ss   = (OutputDataCheck.parseSec(date));
 		
-		day.set(yyyy, MM, dd, hh, mm, 0);
+		day.set(yyyy, MM, dd, hh, mm, ss);
 	}
 	
 	public String getName() {

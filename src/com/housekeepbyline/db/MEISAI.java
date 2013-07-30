@@ -21,9 +21,9 @@ public class MEISAI extends TABLE_DEFINITION{
 			+ TABLE_NAME
 			+ " ("
 			+ ID + " integer primary key autoincrement,"
-			+ L_yyyyMMddhhmm +" integer not null,"
-			+ L_USER_NAME +" integer not null,"
-			+ L_KOUMOKU +" integer not null,"
+			+ L_yyyyMMddhhmm +" text not null,"
+			+ L_USER_NAME +" text not null,"
+			+ L_KOUMOKU +" text not null,"
 			+ L_COST+" integer not null,"
 			+ yyyyMMddhhmm + ","
 			+ USER_NAME +","

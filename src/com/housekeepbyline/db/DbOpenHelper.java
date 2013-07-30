@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DbOpenHelper  extends SQLiteOpenHelper {
 	
-	private static final String DB_NAME = "HKBL001";
+	private static final String DB_NAME = "HKBL003";
 	private static final int DB_VERSION = 2;
 	private static final String[] TABLES = {
 		"com.housekeepbyline.db.MEISAI"
