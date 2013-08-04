@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TreeSet;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 
 import com.housekeepbyline.R;
 import com.housekeepbyline.db.DbAdapter;
+import com.housekeepbyline.db.MEISAI;
 import com.housekeepbyline.input.UpdateDbByLine;
 
 /**
@@ -42,7 +44,7 @@ public class MainActivity extends Activity {
 	EditText et_koumoku;
 	Button start;
 	//日付フォーマット
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	//DB
 	private DbAdapter dbAdapter;
 	
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
 		 */
 		start.setOnClickListener(new View.OnClickListener() {
 			
+			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
 				result.setText("");
@@ -86,8 +89,9 @@ public class MainActivity extends Activity {
 				String koumoku = et_koumoku.getText().toString();
 				//項目に値が入っていない場合は全件検索
 				if(koumoku.isEmpty())koumoku="*";
-				searchKakeibo(uName,koumoku,sDay,eDay);
-				print();				
+				//searchKakeibo(uName,koumoku,sDay,eDay);
+				calcDay(uName,sDay,eDay);
+				//print();				
 			}
 
 		});
@@ -168,6 +172,66 @@ public class MainActivity extends Activity {
 					printKakeibo.add(k);
 				}
 		}
+	}
+	
+	public void calcDay(String name,String startDay, String endDay){
+		
+		//現在の抽出済みデータをクリア
+		printKakeibo.clear();
+		Calendar sCal = Calendar.getInstance();
+		Calendar eCal = Calendar.getInstance();
+		
+		//開始日を準備
+		
+		int syyyy = (InputDataCheck.parseYear(startDay));
+		int sMM   = (InputDataCheck.parseMonth(startDay));
+		int sdd   = (InputDataCheck.parseDay(startDay));
+		int shh = 0;
+		int smm  = 0;
+		
+		//終了日を準備
+		int eyyyy = (InputDataCheck.parseYear(endDay));
+		int eMM   = (InputDataCheck.parseMonth(endDay));
+		int edd   = (InputDataCheck.parseDay(endDay));
+		int ehh = 23;
+		int emm  = 59;
+		
+		//カレンダー型で用意
+		sCal.set(syyyy, sMM, sdd, shh, smm, 0);
+		eCal.set(eyyyy, eMM, edd, ehh, emm, 0);
+		
+		//DBからデータベースを全件取得
+		Uri uri = Uri.parse("content://db/MEISAI");
+		String[] projection = {MEISAI.L_USER_NAME , "sum("+MEISAI.L_COST+")"};
+		String selection =  MEISAI.L_USER_NAME +"=? and "+ MEISAI.L_yyyyMMddhhmm + " between ? and ? ";
+		String[] selectionArgs = new String[3];
+		String groupBy = MEISAI.L_USER_NAME;
+		String having = null;
+		String orderBy = null;
+
+		
+		//データベースから取得する値
+		String dbName = "";
+		String dbCost = "";
+		String s = "*---------------------*"+BR;
+		
+		//検索条件
+		selectionArgs[0] = name;
+		int sum = 0;
+		
+		while(sCal.before(eCal)){
+			selectionArgs[1] = 	sdf.format(sCal.getTime());
+			sCal.add(Calendar.DAY_OF_MONTH, 1);
+			selectionArgs[2] = 	sdf.format(sCal.getTime());
+			Cursor c = dbAdapter.queryraw(uri, projection, selection, selectionArgs, groupBy, having, orderBy);
+			while (c.moveToNext()) {
+				dbName = c.getString(0);
+				dbCost = c.getString(1);
+				sum = sum + Integer.valueOf(dbCost);
+				s = s + selectionArgs[1].substring(0,10) + " " + dbName + " " + dbCost + BR;
+			}
+		}
+		result.setText("合計:" + sum + BR + s);
 	}
 
 	/**

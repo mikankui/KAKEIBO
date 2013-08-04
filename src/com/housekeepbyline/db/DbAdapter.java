@@ -38,6 +38,12 @@ public class DbAdapter extends ContentProvider {
 	    return db.query(table, null, selection, selectionArgs, null, null, orderBy);
 	}
 
+	public Cursor queryraw(Uri uri, String[] projection, String selection, String[] selectionArgs, String groupBy, String having,
+			String orderBy) {
+		String table = uri.getLastPathSegment();
+	    return db.query(table, projection, selection, selectionArgs, groupBy, having, orderBy);
+	}
+	
 	@Override
 	public int delete(Uri uri, String arg1, String[] arg2) {
 		String table=uri.getLastPathSegment();
