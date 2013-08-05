@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,13 +23,14 @@ import android.widget.Spinner;
 import com.housekeepbyline.R;
 import com.housekeepbyline.db.DbAdapter;
 import com.housekeepbyline.db.MEISAI;
+import com.housekeepbyline.graph.LineBarGraph;
 import com.housekeepbyline.input.UpdateDbByLine;
 
 /**
  * @author kentarokira
  *
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener{
 
 	//1行を項目と金額に分割する文字列
 	private List<String> splitter;
@@ -42,9 +44,11 @@ public class MainActivity extends Activity {
 	DatePicker startDay;
 	DatePicker endDay;
 	EditText et_koumoku;
-	Button start;
+	Button BTN_DAY_SUM;
+	Button BTN_DETAIL;
+	Button BTN_GRAPH;
 	//日付フォーマット
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//DB
 	private DbAdapter dbAdapter;
 	
@@ -60,7 +64,12 @@ public class MainActivity extends Activity {
 		startDay = (DatePicker)findViewById(R.id.DP_START_DAY);
 		endDay = (DatePicker)findViewById(R.id.DP_END_DAY);
 		et_koumoku = (EditText) findViewById(R.id.ET_KOUMOKU);
-		start = (Button) findViewById(R.id.BTN_START);
+		BTN_DAY_SUM = (Button) findViewById(R.id.BTN_DAY_SUM);
+		BTN_DETAIL = (Button) findViewById(R.id.BTN_DETAIL);
+		BTN_GRAPH= (Button) findViewById(R.id.BTN_GRAPH);
+		BTN_DAY_SUM.setOnClickListener(this);
+		BTN_DETAIL.setOnClickListener(this);
+		BTN_GRAPH.setOnClickListener(this);
 		
 		// 行を分解(Splite)する文字列を設定
 		setSplitter(" ","　");
@@ -74,27 +83,7 @@ public class MainActivity extends Activity {
 		} else {
 		}
 		
-		/**
-		 * 「集計」ボタン押下時の動作
-		 */
-		start.setOnClickListener(new View.OnClickListener() {
-			
-			@SuppressLint("NewApi")
-			@Override
-			public void onClick(View v) {
-				result.setText("");
-				String sDay = startDay.getYear() + "/" + (startDay.getMonth() + 1) + "/" + startDay.getDayOfMonth();
-				String eDay = endDay.getYear() + "/" + (endDay.getMonth() + 1) + "/" + endDay.getDayOfMonth();
-				String uName = userName.getSelectedItem().toString();
-				String koumoku = et_koumoku.getText().toString();
-				//項目に値が入っていない場合は全件検索
-				if(koumoku.isEmpty())koumoku="*";
-				//searchKakeibo(uName,koumoku,sDay,eDay);
-				calcDay(uName,sDay,eDay);
-				//print();				
-			}
 
-		});
 
 	};
 
@@ -287,6 +276,34 @@ public class MainActivity extends Activity {
 			return true;
 		}catch(NumberFormatException e){
 			return false;
+		}
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public void onClick(View v) {
+		
+		result.setText("");
+		String sDay = startDay.getYear() + "/" + (startDay.getMonth() + 1) + "/" + startDay.getDayOfMonth();
+		String eDay = endDay.getYear() + "/" + (endDay.getMonth() + 1) + "/" + endDay.getDayOfMonth();
+		String uName = userName.getSelectedItem().toString();
+		String koumoku = et_koumoku.getText().toString();
+		
+		switch(v.getId()){
+		case R.id.BTN_DAY_SUM:
+			calcDay(uName,sDay,eDay);
+			break;
+		case R.id.BTN_DETAIL:
+			//項目に値が入っていない場合は全件検索
+			if(koumoku.isEmpty())koumoku="*";
+			searchKakeibo(uName,koumoku,sDay,eDay);
+			print();	
+			break;
+		case R.id.BTN_GRAPH:
+			Intent intent = new Intent(this,LineBarGraph.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			//intent.putExtra("data", )
+			startActivity(intent);
 		}
 	}
 	

@@ -102,11 +102,24 @@
         android:gravity="right">
         
     <Button
-        android:id="@+id/BTN_START"
+        android:id="@+id/BTN_DETAIL"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="集計" />
+        android:text="明細" />
+    <Button
+        android:id="@+id/BTN_DAY_SUM"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="日計" />
+    
+    <Button
+        android:id="@+id/BTN_GRAPH"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="グラフ" />
  	</LinearLayout>
  	
     <LinearLayout
