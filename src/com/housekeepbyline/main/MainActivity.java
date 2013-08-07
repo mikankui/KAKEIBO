@@ -51,6 +51,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//DB
 	private DbAdapter dbAdapter;
+	//グラフ用データ
+	ArrayList<GraphData> graph = new ArrayList<GraphData>();
 	
 	
 	@Override
@@ -167,6 +169,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		//現在の抽出済みデータをクリア
 		printKakeibo.clear();
+		graph.clear();
 		Calendar sCal = Calendar.getInstance();
 		Calendar eCal = Calendar.getInstance();
 		
@@ -218,6 +221,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				dbCost = c.getString(1);
 				sum = sum + Integer.valueOf(dbCost);
 				s = s + selectionArgs[1].substring(0,10) + " " + dbName + " " + dbCost + BR;
+				graph.add(new GraphData(dbName,sCal.getTime(),Integer.valueOf(dbCost)));
 			}
 		}
 		result.setText("合計:" + sum + BR + s);
@@ -300,10 +304,13 @@ public class MainActivity extends Activity implements OnClickListener{
 			print();	
 			break;
 		case R.id.BTN_GRAPH:
-			Intent intent = new Intent(this,LineBarGraph.class);
-			intent.setAction(Intent.ACTION_VIEW);
-			//intent.putExtra("data", )
-			startActivity(intent);
+			if(graph.size()>0){
+				Intent intent = new Intent(this,LineBarGraph.class);
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.putExtra("data", graph);
+				startActivity(intent);
+			}
+			break;
 		}
 	}
 	
