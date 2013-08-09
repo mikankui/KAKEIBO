@@ -6,18 +6,24 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TreeSet;
 
+import jp.adlantis.android.AdlantisView;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import com.housekeepbyline.R;
@@ -53,12 +59,34 @@ public class MainActivity extends Activity implements OnClickListener{
 	private DbAdapter dbAdapter;
 	//グラフ用データ
 	ArrayList<GraphData> graph = new ArrayList<GraphData>();
-	
+	//
+	private static final int ADLANTIS_HEIGHT = 50;
+	  
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+/*        // AdLantisのインスタンス
+        AdlantisView adlantis = new AdlantisView(this);
+        // レイアウト作成
+        @SuppressWarnings("deprecation")
+		FrameLayout.LayoutParams adLantisParams =
+            new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,
+                scaleDipforPixel(ADLANTIS_HEIGHT));
+        adLantisParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+        adLantisParams.setMargins(
+            0, // Left
+            0, // Top
+            0, // Bottom
+            0  // Right
+        );*/
+ 
+        // snip
+        
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+        //addContentView(adlantis, adLantisParams);
+        
 		dbAdapter = new DbAdapter();
 
 		result = (EditText) findViewById(R.id.multiAutoCompleteTextView1);
@@ -314,4 +342,13 @@ public class MainActivity extends Activity implements OnClickListener{
 		}
 	}
 	
+	
+	// dpサイズ => pxサイズ変換
+	private int scaleDipforPixel(int dp) {
+	    int px = 0;
+	    DisplayMetrics metrics = new DisplayMetrics();
+	    this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+	    px = (int)(dp * metrics.density); // 1px × metrics.density = 1dp
+	    return px;
+	}
 }
