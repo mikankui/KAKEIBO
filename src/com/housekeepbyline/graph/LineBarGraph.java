@@ -8,7 +8,6 @@ import java.util.Date;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
-import org.achartengine.chart.LineChart;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -23,7 +22,6 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.net.ParseException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.widget.LinearLayout;
 

@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="lib" path="/Users/kentarokira/Downloads/achartengine-1.1.0.jar"/>
-	<classpathentry kind="lib" path="/Users/kentarokira/Downloads/adlantis_android_sdk_1/adlantis.jar"/>
+	<classpathentry kind="lib" path="libs/adlantis.jar"/>
+	<classpathentry kind="lib" path="libs/achartengine-1.1.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
